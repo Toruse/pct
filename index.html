@@ -9,53 +9,6 @@
 <body>
 <script type="module" src="/src/pct.ts"></script>
 <script type="text/pinky">
-
-    -----------------------------------------------------------
-    -- Function to print the factorial of a number
-    -----------------------------------------------------------
-    func factorial(n)
-      mul := 1
-      for i := 1, n do
-        mul := mul * i
-      end
-      ret mul
-    end
-
-    -----------------------------------------------------------
-    -- FizzBuzz
-    -----------------------------------------------------------
-    func fizzbuzz(n)
-      println "run"
-      i := 1
-      while i <= n do
-        if i % 3 == 0 and i % 5 == 0 then
-          println "i = " + i + " -> " + "FizzBuzz"
-        else
-          if i %3 == 0 then
-            println "i = " + i + " -> " + "Fizz"
-          end
-          if i % 5 == 0 then
-            println "i = " + i + " -> " + "Buzz"
-          end
-        end
-        i := i + 1
-      end
-    end
-
-    func p()
-      println "run3"
-    end
-
-    x := factorial(6)
-    println x
-    println "run1"
-    fizzbuzz(30)
-    println "run2"
-    p()
-
-</script>
-<script type="text/pinky">
-
     leftEdge   := -520
     rightEdge  :=  300
     topEdge    :=  300
@@ -88,7 +41,114 @@
       end
       print('\n')
     end
+</script>
+<script type="text/ccode">
+    leftEdge   = -520
+    rightEdge  =  300
+    topEdge    =  300
+    bottomEdge = -300
+    xStep      =    7
+    yStep      =   15
+    maxIter    =  200
 
+    for (y0 = topEdge; bottomEdge; -yStep) {
+      for (x0 = leftEdge; rightEdge; xStep) {
+        y = 0
+        x = 0
+        theChar = " "
+        i = 0
+        while (i < maxIter) {
+          x_x = (x * x) / 200
+          y_y = (y * y) / 200
+          if (x_x + y_y > 800) {
+            theChar = "" + i
+            if (i > 9) {
+              theChar = "@"
+            }
+            i = maxIter
+          }
+          y = x * y / 100 + y0
+          x = x_x - y_y + x0
+          i = i + 1
+        }
+        print(theChar)
+      }
+      print('\n')
+    }
+</script>
+<script type="text/pinky">
+    -----------------------------------------------------------
+    -- Function to print the factorial of a number
+    -----------------------------------------------------------
+    func factorial(n)
+      mul := 1
+      for i := 1, n do
+        mul := mul * i
+      end
+      ret mul
+    end
+
+    -----------------------------------------------------------
+    -- FizzBuzz
+    -----------------------------------------------------------
+    func fizzbuzz(n)
+      i := 1
+      while i <= n do
+        if i % 3 == 0 and i % 5 == 0 then
+          println "i = " + i + " -> " + "FizzBuzz"
+        else
+          if i %3 == 0 then
+            println "i = " + i + " -> " + "Fizz"
+          end
+          if i % 5 == 0 then
+            println "i = " + i + " -> " + "Buzz"
+          end
+        end
+        i := i + 1
+      end
+    end
+
+    x := factorial(6)
+    println x
+
+    fizzbuzz(30)
+</script>
+<script type="text/ccode">
+    //---------------------------------------------------------
+    // Function to print the factorial of a number
+    //---------------------------------------------------------
+    function factorial(n) {
+      mul = 1
+      for (i = 1; n) {
+        mul = mul * i
+      }
+      return mul
+    }
+
+    //---------------------------------------------------------
+    // FizzBuzz
+    //---------------------------------------------------------
+    function fizzbuzz(n) {
+      i = 1
+      while (i <= n) {
+        if (i % 3 == 0 && i % 5 == 0) {
+          println "i = " + i + " -> " + "FizzBuzz"
+        } else {
+          if (i % 3 == 0) {
+            println "i = " + i + " -> " + "Fizz"
+          }
+          if (i % 5 == 0) {
+            println "i = " + i + " -> " + "Buzz"
+          }
+        }
+        i = i + 1
+      }
+    }
+
+    x = factorial(6)
+    println x
+
+    fizzbuzz(30)
 </script>
 <script type="text/pinky">
     x := 0
@@ -96,39 +156,81 @@
     name := 'Pinky'
 
     -----------------------------------------------
-        -- Find the max value between two numbers
+    -- Find the max value between two numbers
     -----------------------------------------------
-        func max(a, b)
-    if a > b then
-    ret a
-    end
-    ret b
-    end
-
-    -----------------------------------------------
-        -- Compute the factorial of a number
-    -----------------------------------------------
-        func factorial(n)
-    if n <= 1 then
-    ret 1
-    else
-    ret n * factorial(n - 1)
-    end
+    func max(a, b)
+      if a > b then
+        ret a
+      end
+      ret b
     end
 
     -----------------------------------------------
-        -- Start procedure
+    -- Compute the factorial of a number
     -----------------------------------------------
-        func main()
-    i := 0
-    while i <= 10 do
+    func factorial(n)
+      if n <= 1 then
+        ret 1
+      else
+        ret n * factorial(n - 1)
+      end
+    end
+
+    -----------------------------------------------
+    -- Start procedure
+    -----------------------------------------------
+    func main()
+      i := 0
+      while i <= 10 do
         println(i)
         i := i + 1
-    end
-    for i := 1, 10 do
+      end
+      for i := 1, 10 do
         println(factorial(i))
-        end
+      end
     end
+
+    main()
+</script>
+<script type="text/ccode">
+    x = 0
+    pi = 3.141592
+    name = 'Pinky'
+
+    //---------------------------------------------
+    // Find the max value between two numbers
+    //---------------------------------------------
+    function max(a, b) {
+      if (a > b) {
+        return a
+      }
+      return b
+    }
+
+    //---------------------------------------------
+    // Compute the factorial of a number
+    //---------------------------------------------
+    function factorial(n) {
+      if (n <= 1) {
+        return 1
+      } else {
+        return n * factorial(n - 1)
+      }
+    }
+
+    //---------------------------------------------
+    // Start procedure
+    //---------------------------------------------
+    function main() {
+      i = 0
+      while (i <= 10) {
+        println(i)
+        i = i + 1
+      }
+      for (i = 1; 10) {
+        println(factorial(i))
+      }
+    }
 
     main()
 </script>

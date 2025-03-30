@@ -1,5 +1,5 @@
-import {pinky} from "./pinky.ts";
-import {ccode} from "./ccode.ts";
+import pinky from "./pinky.ts";
+import ccode from "./ccode.ts";
 
 document.addEventListener('DOMContentLoaded', function():void {
     let scripts: HTMLCollectionOf<HTMLScriptElement>;
