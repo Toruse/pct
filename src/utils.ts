@@ -56,6 +56,16 @@ export function runtimeError(message: string, lineno: number): void {
     throw new Error(`[Line ${lineno}]: ${message}`);
 }
 
+export function compileError(message: string, lineno: number): void {
+    console.error(`${Colors.RED}[Line ${lineno}]: ${message} ${Colors.WHITE}`);
+    throw new Error(`[Line ${lineno}]: ${message}`);
+}
+
+export function vmError(message: string, pc: number): void {
+    console.error(`${Colors.RED}[PC: ${pc}]: ${message} ${Colors.WHITE}`);
+    throw new Error(`[PC: ${pc}]: ${message}`);
+}
+
 export class Colors {
     static WHITE: string = '\x1b[0m';
     static BLUE: string = '\x1b[94m';

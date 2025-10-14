@@ -7,7 +7,7 @@ import {
     FuncCallStmt, FuncDecl,
     Grouping,
     Identifier, IfStmt,
-    Integer, LogicalOp, PrintStmt,
+    Integer, LocalAssignment, LogicalOp, PrintStmt,
     RetStmt, Stmts,
     StringLiteral, UnOp, WhileStmt
 } from "./model.ts";
@@ -26,10 +26,11 @@ import {
     TOK_SLASH,
     TOK_STAR
 } from "./tokens.ts";
-
-const TYPE_NUMBER = 'TYPE_NUMBER'
-const TYPE_STRING = 'TYPE_STRING'
-const TYPE_BOOL   = 'TYPE_BOOL'
+import {
+    TYPE_BOOL,
+    TYPE_NUMBER,
+    TYPE_STRING
+} from "../defs.ts";
 
 export default class Interpreter {
     interpret(node: Expr, env: Environment): any {
@@ -63,6 +64,11 @@ export default class Interpreter {
         if (node instanceof Assignment) {
             const [type, value] = this.interpret(node.right, env);
             env.setVar((node.left as Identifier).name, [type, value]);
+        }
+
+        if (node instanceof LocalAssignment) {
+            const [rightType, rightVal] = this.interpret(node.right, env);
+            env.setLocal((node.left as Identifier).name, [rightType, rightVal]);
         }
 
         if (node instanceof BinOp) {
@@ -252,11 +258,12 @@ export default class Interpreter {
 
             const newEnv: Environment = funcEnv.newEnv()
             funcDecl.params.forEach((param: any, index: number) => {
-                newEnv.setVar(param.name, this.interpret(node.args[index], env))
+                newEnv.setLocal(param.name, this.interpret(node.args[index], env))
             })
 
             try {
                 this.interpret(funcDecl.bodyStatements, newEnv)
+                return [TYPE_NUMBER, 0]
             } catch (e) {
                 if (e instanceof Return) {
                     return e.value;

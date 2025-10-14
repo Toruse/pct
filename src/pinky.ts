@@ -4,6 +4,8 @@ import {Colors, printPrettyAst} from "./utils.ts";
 import Parser from "./pinky/parser.ts";
 import {Stmts} from "./pinky/model.ts";
 import Interpreter from "./pinky/interpreter.ts";
+import {Compiler, Instruction} from "./pinky/compiler.ts";
+import {VM} from "./pinky/vm.ts";
 
 export default function pinky(source:string):void {
     try {
@@ -34,6 +36,19 @@ export default function pinky(source:string):void {
         console.log(`${Colors.GREEN}***************************************${Colors.WHITE}`);
         const interpreter = new Interpreter();
         interpreter.interpretAst(ast);
+
+        console.log();
+        console.log(`${Colors.GREEN}***************************************${Colors.WHITE}`);
+        console.log(`${Colors.GREEN}CODE GENERATION:${Colors.WHITE}`);
+        console.log(`${Colors.GREEN}***************************************${Colors.WHITE}`);
+
+        const compiler = new Compiler();
+        const code: Instruction[] = compiler.generateCode(ast);
+        compiler.printCode();
+
+        const vm = new VM()
+        vm.run(code)
+
     } catch (err: unknown) {
         if (err instanceof Error) {
             console.error(`Error: ${err.message}`);

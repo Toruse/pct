@@ -33,6 +33,10 @@ export default class Environment {
         return value
     }
 
+    setLocal(name: string, value: any): any {
+        this.vars[name] = value
+    }
+
     getFunc(name: string): any {
         let currentEnv: Environment | null = this
         while (currentEnv) {

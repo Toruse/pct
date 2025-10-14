@@ -2,7 +2,7 @@ import Token, {
     TOK_AND, TOK_ASSIGN, TOK_CARET, TOK_COMMA, TOK_DO,
     TOK_ELSE,
     TOK_END, TOK_EQEQ, TOK_FALSE, TOK_FLOAT, TOK_FOR, TOK_FUNC, TOK_GE, TOK_GT, TOK_IDENTIFIER,
-    TOK_IF, TOK_INTEGER, TOK_LE, TOK_LPAREN, TOK_LT, TOK_MINUS, TOK_MOD, TOK_NE, TOK_NOT,
+    TOK_IF, TOK_INTEGER, TOK_LE, TOK_LOCAL, TOK_LPAREN, TOK_LT, TOK_MINUS, TOK_MOD, TOK_NE, TOK_NOT,
     TOK_OR, TOK_PLUS,
     TOK_PRINT,
     TOK_PRINTLN, TOK_RET, TOK_RPAREN, TOK_SLASH, TOK_STAR, TOK_STRING,
@@ -16,7 +16,7 @@ import {
     Expr,
     Float, ForStmt, FuncCall, FuncCallStmt, FuncDecl, Grouping, Identifier,
     IfStmt,
-    Integer,
+    Integer, LocalAssignment,
     LogicalOp, Param,
     PrintStmt, RetStmt,
     Stmt,
@@ -336,6 +336,16 @@ export default class Parser {
         return null
     }
 
+    localAssign() {
+        this.expect(TOK_LOCAL);
+        const left: Expr | null = this.expr();
+        if (!left) return null
+        this.expect(TOK_ASSIGN);
+        const right: Expr | null = this.expr();
+        if (!right) return null
+        return new LocalAssignment(left, right, this.previousToken().line);
+    }
+
     stmt(): Stmt | null {
         const tokenType = this.peek().tokenType;
         if (tokenType === TOK_PRINT) return this.printStmt('');
@@ -345,6 +355,7 @@ export default class Parser {
         if (tokenType === TOK_FOR) return this.forStmt();
         if (tokenType === TOK_FUNC) return this.funcDecl();
         if (tokenType === TOK_RET) return this.retStmt();
+        if (tokenType === TOK_LOCAL) return this.localAssign();
         const left: Expr | null = this.expr();
         if (!left) return null
         if (this.match(TOK_ASSIGN)) {

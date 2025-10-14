@@ -35,9 +35,6 @@ export class Float extends Expr {
 
     constructor(value: number, line: number) {
         super();
-        if (typeof value !== 'number') {
-            throw new Error(`Invalid Float value: ${value}`);
-        }
         this.value = value;
         this.line = line;
     }
@@ -236,6 +233,23 @@ export class Assignment extends Stmt {
 
     toString(): string {
         return `Assignment(${this.left}, ${this.right})`;
+    }
+}
+
+export class LocalAssignment extends Stmt {
+    public left: Expr;
+    public right: Expr;
+    public line: number;
+
+    constructor(left: Expr, right: Expr, line: number) {
+        super();
+        this.left = left;
+        this.right = right;
+        this.line = line;
+    }
+
+    toString(): string {
+        return `LocalAssignment(${this.left}, ${this.right})`;
     }
 }
 

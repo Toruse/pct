@@ -37,6 +37,7 @@ export const TOK_TRUE = 'TOK_TRUE';
 export const TOK_FALSE = 'TOK_FALSE';
 export const TOK_AND = 'TOK_AND';
 export const TOK_OR = 'TOK_OR';
+export const TOK_LOCAL = 'TOK_LOCAL';
 export const TOK_WHILE = 'TOK_WHILE';
 export const TOK_DO = 'TOK_DO';
 export const TOK_FOR = 'TOK_FOR';
@@ -55,6 +56,7 @@ export const keywords: {[key: string]: string} = {
     'false': TOK_FALSE,
     'and': TOK_AND,
     'or': TOK_OR,
+    'local': TOK_LOCAL,
     'while': TOK_WHILE,
     'do': TOK_DO,
     'for': TOK_FOR,
